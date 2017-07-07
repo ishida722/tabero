@@ -21,7 +21,6 @@ class TwApi:
         tweetList = []
         search = self.search(word)
         for status in search['statuses']:
-            # longstr = longstr + status['text']
             tweetList.append(status['text'])
         self.searchCount = len(search['statuses'])
         return tweetList
