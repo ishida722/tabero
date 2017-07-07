@@ -12,7 +12,15 @@ class API:
 class Search(API):
 
     def __init__(self, query, count):
-        self.rawResult = self.api.GetSearch(term=query)
+        self.rawResult = self.api.GetSearch(term=query, count=count, result_type='recent')
+        self._i = 0
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        return self
+
 
     def GetSearchText(self, word):
         tweetList = []

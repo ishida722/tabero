@@ -3,10 +3,10 @@ from tabero.twapi import Search
 
 class TestTwApi(unittest.TestCase):
     def setUp(self):
-        self.testSearch = Search('#pebble', 10)
+        self.testSearch = Search('#pebble', 1)
 
     def test_GetSearchText(self):
-        print(self.testSearch.rawResult)
+        self.assertEqual('a', self.testSearch.rawResult[0])
 
 if __name__ == '__main__':
         unittest.main()
