@@ -27,12 +27,10 @@ class Tabero:
         response = urllib.request.urlopen(url + params)
         return response.read().decode('utf-8')
 
-    def ParsXml(self, xml):
-        wordList = []
+    def Nouns(self, xml):
         tree = etree.fromstring(xml)
         for e in tree.iter("{urn:yahoo:jp:jlp}surface"):
-            wordList.append(e.text)
-        return wordList
+            yield e.text
 
     def FetchFoodList(self):
         foodList = []
@@ -40,3 +38,15 @@ class Tabero:
             for food in self.ParsXml(self.yapi_lang(tweet)):
                 foodList.append(str(food))
         return collections.Counter(foodList).most_common(1)[0][0]
+
+    def GenarateFoodList(self, tweets):
+        self.foodList = []
+        for tweet in tweets:
+            for noun in self.Nouns(self.yapi_lang(tweet)):
+                if noun.isalpha() == True : continue
+                if len(noun) == 1 : continue
+                foodList.append(str(food))
+
+    def Tabetai(self):
+        self.GenarateFoodList(self.tw.GetSearchText('食べたい'))
+        return self.foodList
