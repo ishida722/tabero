@@ -1,21 +1,18 @@
 import tabero.secret as secret
-from twitter import *
+import twitter
 import json
 
-class TwApi:
-    t = Twitter(
-            auth=OAuth(secret.TWITTER_CONSUMER_KEY,
-                       secret.TWITTER_CONSUMER_SECRET,
-                       secret.TWITTER_ACCESS_TOKEN,
-                       secret.TWITTER_ACCESS_TOKEN_SECRET))
-    def __init__(self):
-        pass
+class API:
+    api = twitter.Api(
+            consumer_key=secret.TWITTER_CONSUMER_KEY,
+            consumer_secret=secret.TWITTER_CONSUMER_SECRET,
+            access_token_key=secret.TWITTER_ACCESS_TOKEN,
+            access_token_secret=secret.TWITTER_ACCESS_TOKEN_SECRET)
 
-    def search(self, word):
-        return self.t.search.tweets(q=word, count=10, resule_type='recent')
+class Search(API):
 
-    def timeline(self):
-        return self.t.statuses.home_timeline()
+    def __init__(self, query, count):
+        self.rawResult = self.api.GetSearch(term=query)
 
     def GetSearchText(self, word):
         tweetList = []

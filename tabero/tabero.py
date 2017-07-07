@@ -7,13 +7,13 @@ import urllib
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as etree
-from tabero.twapi import TwApi
+from tabero.twapi import Search
 import collections
 import tabero.secret as secret
 
 class Tabero:
     def __init__(self):
-        self.tw = TwApi()
+        self.tw = Search('a', 10)
 
     def yapi_lang(self, sentence):
         url = 'http://jlp.yahooapis.jp/MAService/V1/parse?'
