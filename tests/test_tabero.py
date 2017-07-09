@@ -1,5 +1,6 @@
 import unittest
 from tabero.tabero import Tabero
+import tests.data
 
 class TestTabero(unittest.TestCase):
     def setUp(self):
@@ -18,6 +19,22 @@ class TestTabero(unittest.TestCase):
         responce = self.testTabero.yapi_lang(sentence)
         nounList = list(self.testTabero.Nouns(responce))
         self.assertEqual(['庭', '二羽' ,'ニワトリ'], nounList)
+
+    def test_TweetsAnalys(self):
+        responce = self.testTabero.yapi_lang(tests.data.tweets_onlyFood)
+        nounList = list(self.testTabero.Nouns(responce))
+        self.assertEqual(['トンカツ', 'おはぎ' ,'トンカツ', '朝ごはん'], nounList)
+
+    def test_IsAlpha(self):
+        word = 'abc'
+        result = self.testTabero.IsAlpha(word)
+        self.assertTrue(result)
+
+
+    # def test_TweetsAnalysQithNoise(self):
+    #     self.testTabero.GenarateFoodList(tests.data.tweets_withNoise)
+    #     self.assertEqual(['トンカツ', 'おはぎ' ,'トンカツ', '朝ごはん'], self.testTabero.foodList)
+
 
 
 

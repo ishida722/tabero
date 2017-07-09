@@ -1,6 +1,5 @@
 import tabero.secret as secret
 import twitter
-import json
 
 class API:
     api = twitter.Api(
@@ -18,14 +17,13 @@ class Search(API):
     def __iter__(self):
         return self
 
-    def next(self):
-        return self
+    def __len__(self):
+        return len(self.rawResult)
 
+    def __next__(self):
+        if self._i == len(self.rawResult):
+            raise StopIteration()
+        tweet = self.rawResult[self._i].text
+        self._i += 1
+        return tweet
 
-    def GetSearchText(self, word):
-        tweetList = []
-        search = self.search(word)
-        for status in search['statuses']:
-            tweetList.append(status['text'])
-        self.searchCount = len(search['statuses'])
-        return tweetList

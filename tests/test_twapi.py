@@ -3,10 +3,14 @@ from tabero.twapi import Search
 
 class TestTwApi(unittest.TestCase):
     def setUp(self):
-        self.testSearch = Search('#pebble', 1)
+        self.testSearch = Search('食べたい', 10)
 
-    def test_GetSearchText(self):
-        self.assertEqual('a', self.testSearch.rawResult[0])
+    def test_AssertSearchNumbers(self):
+        self.assertEqual(10, len(self.testSearch))
+
+    def test_ResultIsStrings(self):
+        for tweet in self.testSearch:
+            self.assertEqual(type('abc'), type(tweet))
 
 if __name__ == '__main__':
         unittest.main()

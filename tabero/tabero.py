@@ -10,6 +10,7 @@ import xml.etree.ElementTree as etree
 from tabero.twapi import Search
 import collections
 import tabero.secret as secret
+import re
 
 class Tabero:
     def __init__(self):
@@ -39,13 +40,18 @@ class Tabero:
                 foodList.append(str(food))
         return collections.Counter(foodList).most_common(1)[0][0]
 
+    def IsAlpha(self, word):
+        alphaReg = re.compile(r'^[a-zA-Z]+$')
+        def isalpha(s):
+                return alphaReg.match(s) is not None
+
     def GenarateFoodList(self, tweets):
         self.foodList = []
         for tweet in tweets:
             for noun in self.Nouns(self.yapi_lang(tweet)):
-                if noun.isalpha() == True : continue
+                if self.IsAlpha(noun) == True : continue
                 if len(noun) == 1 : continue
-                foodList.append(str(food))
+                self.foodList.append(str(noun))
 
     def Tabetai(self):
         self.GenarateFoodList(self.tw.GetSearchText('食べたい'))
