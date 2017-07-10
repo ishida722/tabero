@@ -1,20 +1,15 @@
 #coding:utf-8
 
-import sys
-import csv
-import random
 import urllib
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as etree
 from tabero.twapi import Search
-import collections
 import tabero.secret as secret
 import re
+from collections import Counter
 
-class Tabero:
-    def __init__(self):
-        self.tw = Search('a', 10)
+class FoodList:
 
     def yapi_lang(self, sentence):
         url = 'http://jlp.yahooapis.jp/MAService/V1/parse?'
@@ -33,26 +28,25 @@ class Tabero:
         for e in tree.iter("{urn:yahoo:jp:jlp}surface"):
             yield e.text
 
-    def FetchFoodList(self):
-        foodList = []
-        for tweet in self.tw.GetSearchText('食べたい'):
-            for food in self.ParsXml(self.yapi_lang(tweet)):
-                foodList.append(str(food))
-        return collections.Counter(foodList).most_common(1)[0][0]
-
     def IsAlpha(self, word):
         alphaReg = re.compile(r'^[a-zA-Z]+$')
-        def isalpha(s):
-                return alphaReg.match(s) is not None
+        return alphaReg.match(word) is not None
 
-    def GenarateFoodList(self, tweets):
-        self.foodList = []
+    def Genarate(self, tweets):
+        self.All = []
         for tweet in tweets:
             for noun in self.Nouns(self.yapi_lang(tweet)):
                 if self.IsAlpha(noun) == True : continue
                 if len(noun) == 1 : continue
-                self.foodList.append(str(noun))
+                self.All.append(str(noun))
+        self.most = self.GetMost(self.All)
 
-    def Tabetai(self):
-        self.GenarateFoodList(self.tw.GetSearchText('食べたい'))
-        return self.foodList
+    def GetMost(self, lst):
+        counter = Counter(lst)
+        return counter.most_common()[0][0]
+
+def Tabetai():
+    tw = Search('食べたい', 100)
+    foodList = FoodList()
+    foodList.Genarate(list(tw))
+    return foodList.most

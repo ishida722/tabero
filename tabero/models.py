@@ -1,6 +1,6 @@
 #coding:utf-8
 import datetime
-from tabero.flask_app import db
+from flask_app import db
 
 class Food(db.Model):
     __tablename__ = 'food'

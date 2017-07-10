@@ -26,4 +26,3 @@ class Search(API):
         tweet = self.rawResult[self._i].text
         self._i += 1
         return tweet
-
