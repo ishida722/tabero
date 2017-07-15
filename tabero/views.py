@@ -5,11 +5,7 @@ from flask_app import app, db
 from tabero.models import Food
 from tabero import tabero
 import random
-
-def AddFood():
-    food = tabero.Tabetai()
-    db.session.add(food)
-    db.session.commit()
+import os
 
 @app.route('/')
 def LandingPage():
@@ -17,14 +13,24 @@ def LandingPage():
 
 @app.route('/tabetai')
 def SuggestFood():
-    food = tabero.Tabetai()
+    food = Food.query.order_by(Food.time).first()
     return render_template('tabero.html', food=food)
 
 @app.route('/foodlist/genarate')
 def GenarateFoodList():
-    AddFood()
+    Food.query.delete()
+    foods = tabero.Tabetai()
+    for food in foods:
+        db.session.add(Food(food))
+    db.session.commit()
     return "food list genarated"
 
 @app.route('/foodlist')
 def ShowFoodList():
-    return str(Food.query.first())
+    return str(Food.query.all())
+
+@app.route('/foodlist/init')
+def DataBaseInit():
+    if os.path.exists('tabero.db'):
+        os.remove('tabero.db')
+    db.create_all()

@@ -39,14 +39,27 @@ class FoodList:
                 if self.IsAlpha(noun) == True : continue
                 if len(noun) == 1 : continue
                 self.All.append(str(noun))
-        self.most = self.GetMost(self.All)
+        self.sortAll = self.SortMost(self.All)
+        self.most = self.sortAll[0][0]
 
-    def GetMost(self, lst):
+    def SortMost(self, lst):
         counter = Counter(lst)
-        return counter.most_common()[0][0]
+        return counter.most_common()
+
+    def __iter__(self):
+        self._i = 0
+        return self
+
+    def __next__(self):
+        self._i
+        if self._i == len(self.sortAll):
+            return StopIteration
+        ret =  self.sortAll[self._i][0]
+        self._i += 1
+        return ret
 
 def Tabetai():
     tw = Search('食べたい', 100)
     foodList = FoodList()
     foodList.Genarate(list(tw))
-    return foodList.most
+    return foodList
