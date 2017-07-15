@@ -11,3 +11,5 @@ class TestFlaskApp(unittest.TestCase):
 
     def test_root(self):
         rv = self.app.get('/')
+        self.assertEqual(rv.status_code, 200)
+        self.assertTrue('Tabero' in str(rv.data))
