@@ -46,8 +46,8 @@ class TestTabero(unittest.TestCase):
         self.assertEqual(['トンカツ', 'おはぎ' ,'トンカツ', '朝ごはん'], foodList)
         self.assertEqual('トンカツ', self.testFoodList.most)
 
-    def test_Tabetai(self):
-        tabero.Tabetai()
+    # def test_Tabetai(self):
+    #     tabero.Tabetai()
 
 if __name__ == '__main__':
         unittest.main()
