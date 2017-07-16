@@ -51,9 +51,8 @@ class FoodList:
         return self
 
     def __next__(self):
-        self._i
-        if self._i == len(self.sortAll):
-            return StopIteration
+        if self._i >= len(self.sortAll):
+            raise StopIteration
         ret =  self.sortAll[self._i][0]
         self._i += 1
         return ret

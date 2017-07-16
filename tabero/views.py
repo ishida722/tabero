@@ -23,7 +23,7 @@ def GenarateFoodList():
     for food in foods:
         db.session.add(Food(food))
     db.session.commit()
-    return "food list genarated"
+    return 'foodlist genarated'
 
 @app.route('/foodlist')
 def ShowFoodList():
