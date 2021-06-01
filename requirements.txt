@@ -14,6 +14,6 @@ python-twitter==3.3
 requests==2.18.1
 requests-oauthlib==0.8.0
 SQLAlchemy==1.1.11
-urllib3==1.21.1
+urllib3==1.26.5
 uWSGI==2.0.15
 Werkzeug==0.12.2
